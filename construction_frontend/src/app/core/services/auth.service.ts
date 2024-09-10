@@ -58,6 +58,7 @@ export class AuthService {
   public login(authRequest:AuthenticationRequest): Observable<any> {
     return this.http.post(
       'http://localhost:8888/USER-SERVICE/api/auth/login',
+      // ...............;;;
       authRequest).pipe(map(dataresponse => {
         return dataresponse;
         })
