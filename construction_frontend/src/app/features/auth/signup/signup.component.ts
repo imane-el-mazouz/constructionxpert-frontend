@@ -1,50 +1,79 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import {User} from "../../../core/models/user";
+import {NgIf} from "@angular/common";
+import {Role} from "../../../core/enums/role";
+
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    NgIf
   ],
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-  signupForm: FormGroup;
+//   signupForm: FormGroup;
+//
+//   constructor(
+//     private fb: FormBuilder,
+//     private authService: AuthService,
+//     private router: Router
+//   ) {
+//     this.signupForm = this.fb.group({
+//       fullName: ['', Validators.required],
+//       username: ['', Validators.required],
+//       password: ['', Validators.required],
+//       email: ['', [Validators.required, Validators.email]],
+//       role: ['CUSTOMER', Validators.required]
+//     });
+//   }
+//
+//   signup(): void {
+//
+//
+//     if (this.signupForm.valid) {
+//       const { fullName, username, password, email, role } = this.signupForm.value;
+//
+//       this.authService.signup(fullName, username, email, password, role).subscribe(
+//         () => {
+//           this.router.navigate(['/login']);
+//         },
+//         error => {
+//           console.error('Signup failed', error);
+//           alert('Signup failed. Please try again.');
+//         }
+//       );
+//     }
+//   }
+//
+// }
+  user: User = {
+    fullName: '',
+    username: '',
+    email: '',
+    password: '',
+    role: Role.CUSTOMER
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.signupForm = this.fb.group({
-      fullName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      role: ['CUSTOMER', Validators.required]
+  };
+  errorMessage: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  onSignup(): void {
+    this.authService.signup(this.user).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        this.errorMessage = 'An error occurred during signup.';
+      }
     });
   }
-
-  signup(): void {
-
-
-    if (this.signupForm.valid) {
-      const { fullName, username, password, email, role } = this.signupForm.value;
-
-      this.authService.signup(fullName, username, email, password, role).subscribe(
-        () => {
-          this.router.navigate(['/login']);
-        },
-        error => {
-          console.error('Signup failed', error);
-          alert('Signup failed. Please try again.');
-        }
-      );
-    }
-  }
-
 }

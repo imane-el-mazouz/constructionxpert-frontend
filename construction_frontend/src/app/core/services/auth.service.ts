@@ -1,9 +1,10 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Role } from "../enums/role";
-import {AuthenticationRequest} from "../models/authentication-request";
+import { AuthenticationRequest } from "../models/authentication-request";
+import { User } from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,7 @@ import {AuthenticationRequest} from "../models/authentication-request";
 export class AuthService {
 
   private tokenKey = 'token';
-  private personIdKey = 'personId';
-  private personRoleKey = 'personRole';
+  private userRoleKey = 'userRole';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -32,13 +32,13 @@ export class AuthService {
     return null;
   }
 
-  setPersonRole(role: Role): void {
+  setUserRole(role: Role): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(this.personRoleKey, role);
+      localStorage.setItem(this.userRoleKey, role);
     }
   }
 
-  getPersonRole(): Role | null {
+  getUserRole(): Role | null {
     const token = this.getToken();
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
@@ -50,29 +50,28 @@ export class AuthService {
   clearToken(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.tokenKey);
-      localStorage.removeItem(this.personIdKey);
-      localStorage.removeItem(this.personRoleKey);
+      localStorage.removeItem(this.userRoleKey);
     }
   }
 
-  public login(authRequest:AuthenticationRequest): Observable<any> {
-    return this.http.post(
-      'http://localhost:8888/USER-SERVICE/api/auth/login',
-      // ...............;;;
-      authRequest).pipe(map(dataresponse => {
-        return dataresponse;
-        })
-      );
+  login(authRequest: AuthenticationRequest): Observable<any> {
+    return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/login', authRequest)
+      .pipe(map(data => data));
   }
 
-  signup(fullName: string, username: string, email: string, password: string, role: string): Observable<any> {
-    return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', {
-      fullName,
-      username,
-      email,
-      password,
-      role
-    });
+  signup(user: User): Observable<any> {
+    return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', user);
   }
+
+  // signup(fullName: string, username: string, email: string, password: string): Observable<any> {
+  //   return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', {
+  //     fullName,
+  //     username,
+  //     email,
+  //     password,
+  //     role: Role.CUSTOMER
+  //   });
+  // }
+
 
 }
