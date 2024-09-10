@@ -1,1 +1,52 @@
-<p>login works!</p>
+
+
+<!--<div class="login-container">-->
+<!--  <div class="login-box">-->
+<!--    <div class="login-content">-->
+<!--      <h2 class="welcome-text">Welcome back</h2>-->
+<!--      <p class="sub-text">We're so excited to see you again!</p>-->
+
+<!--      <form [formGroup]="loginForm" (ngSubmit)="login()">-->
+<!--        <div class="form-group">-->
+<!--          <label for="email" class="form-label">Email or username</label>-->
+<!--          <div class="input-container">-->
+<!--            <input type="text" id="email" formControlName="email" class="form-input" placeholder="Enter your email or phone number" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--          <label for="password" class="form-label">Password</label>-->
+<!--          <div class="input-container">-->
+<!--            <input type="password" id="password" formControlName="password" class="form-input" placeholder="Enter your password" />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <a href="#" class="forgot-password">Forget your password?</a>-->
+<!--        <button type="submit" class="login-btn" >Log In</button>-->
+<!--      </form>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+<mat-card class="login-card">
+  <mat-card-title class="login-card-title">Authentification</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Username">
+        <mat-error ngIf="form.get('username')?.hasError('required')">Username is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Password">
+        <mat-error ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button style="background-color: bisque" type="submit">Se Connecter</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

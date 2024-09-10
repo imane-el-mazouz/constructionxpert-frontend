@@ -1,19 +1,41 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {AuthenticationRequest} from "../../../core/models/authentication-request";
+import {MatError, MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatCard, MatCardContent, MatCardModule, MatCardTitle} from "@angular/material/card";
+import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {User} from "../../../core/models/user";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    MatError,
+    MatCardTitle,
+    MatCardContent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatLabel
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   errorMessage: string = '';
+
+  form = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
+  });
+  authRequest: AuthenticationRequest = { username: '', password: '' };
 
   constructor(
     private fb: FormBuilder,
@@ -22,20 +44,20 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  login(): void {
-    const { email, password } = this.loginForm.value;
-
-    if (this.loginForm.invalid) {
-      return;
+  ngOnInit(): void {
     }
 
-    this.http.post<{ accessToken: string, user: { role: string } }>('http://localhost:8080/api/auth/login', { email, password })
-      .subscribe(
+  login(): void {
+
+    this.authRequest.username=this.loginForm.get('username')?.value!;
+    this.authRequest.password=this.loginForm.get('password')?.value!;
+
+    this.authService.login(this.authRequest).subscribe(
         response => {
           this.authService.setToken(response.accessToken);
 

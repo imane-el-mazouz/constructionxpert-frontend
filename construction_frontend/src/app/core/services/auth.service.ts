@@ -1,8 +1,9 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from "@angular/common";
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 import { Role } from "../enums/role";
+import {AuthenticationRequest} from "../models/authentication-request";
 
 @Injectable({
   providedIn: 'root'
@@ -50,25 +51,27 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.tokenKey);
       localStorage.removeItem(this.personIdKey);
-      localStorage.removeItem(this.personRoleKey); // Clear the role as well
+      localStorage.removeItem(this.personRoleKey);
     }
   }
 
-  login(email: string, password: string): void {
-    this.http.post<{ token: string, role: Role }>(
-      'http://localhost:8080/api/auth/login',
-      { email, password }
-    )
-      .subscribe(response => {
-        this.setToken(response.token);
-        this.setPersonRole(response.role);
-      });
+  public login(authRequest:AuthenticationRequest): Observable<any> {
+    return this.http.post(
+      'http://localhost:8888/USER-SERVICE/api/auth/login',
+      authRequest).pipe(map(dataresponse => {
+        return dataresponse;
+        })
+      );
   }
 
-  signup(email: string, password: string, role: Role): Observable<any> {
-    return this.http.post(
-      'http://localhost:8080/api/auth/signup',
-      { email, password, role }
-    );
+  signup(fullName: string, username: string, email: string, password: string, role: string): Observable<any> {
+    return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', {
+      fullName,
+      username,
+      email,
+      password,
+      role
+    });
   }
+
 }
