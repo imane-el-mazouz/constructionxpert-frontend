@@ -16,7 +16,7 @@ export class authGuard {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const expectedRole = route.data['expectedRole'] as Role;
-    const userRole = this.authService.getPersonRole();
+    const userRole = this.authService.getUserRole();
 
     if (userRole && userRole === expectedRole) {
       return true;
