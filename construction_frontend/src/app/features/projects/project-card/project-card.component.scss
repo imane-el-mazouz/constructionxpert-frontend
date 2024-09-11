@@ -1,0 +1,109 @@
+.project-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    background-color: #ffffff;
+  
+    &:hover {
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+  
+    mat-card-header {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-bottom: 1px solid #e9ecef;
+  
+      mat-card-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0;
+        color: #343a40;
+      }
+  
+      button {
+        margin: -8px -8px -8px 8px;
+      }
+    }
+  
+    mat-card-content {
+      padding: 20px;
+    }
+  
+    .project-description {
+      font-size: 14px;
+      color: #6c757d;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+  
+    .project-details {
+      .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: #495057;
+  
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          margin-right: 12px;
+          color: #6c757d;
+        }
+      }
+    }
+  
+    mat-card-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px 20px;
+      gap: 12px;
+    }
+  
+    .view-tasks-btn, .edit-btn {
+      flex: 1;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 0;
+      border-radius: 8px;
+  
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  
+    .view-tasks-btn {
+      color: #007bff;
+      border-color: #007bff;
+  
+      &:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+      }
+    }
+  
+    .edit-btn {
+      color: #28a745;
+      border-color: #28a745;
+  
+      &:hover {
+        background-color: rgba(40, 167, 69, 0.1);
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .project-card {
+      mat-card-actions {
+        flex-direction: column;
+      }
+  
+      .view-tasks-btn, .edit-btn {
+        width: 100%;
+        margin: 4px 0;
+      }
+    }
+  }
