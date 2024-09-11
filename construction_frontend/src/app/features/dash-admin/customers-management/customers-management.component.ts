@@ -3,6 +3,12 @@ import { Customer } from "../../../core/models/customer";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AdminService } from "../../../core/services/admin.service";
 import { NgForOf, NgIf } from "@angular/common";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {MatButton, MatButtonModule, MatIconButton} from "@angular/material/button";
+import {MatList, MatListItem, MatListModule} from "@angular/material/list";
+import {MatLine, MatLineModule} from "@angular/material/core";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput, MatInputModule} from "@angular/material/input";
 
 @Component({
   selector: 'app-customers-management',
@@ -10,7 +16,15 @@ import { NgForOf, NgIf } from "@angular/common";
   imports: [
     ReactiveFormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatIconModule,
+    MatIconButton,
+    MatListItem,
+    MatLineModule,
+    MatListModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './customers-management.component.html',
   styleUrls: ['./customers-management.component.scss']
