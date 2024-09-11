@@ -11,5 +11,5 @@ export interface Task {
 
   project : Project ;
 
-  resources : Resource[] ;
+  // resources : Resource[] ;
 }
