@@ -1,1 +1,57 @@
-<p>resource-management works!</p>
+<div class="resource-management">
+
+  <h1>Resources Management</h1>
+
+  <div *ngIf="isEditing || !selectedResource">
+    <h2>{{ isEditing ? 'Modifier la ressource' : 'Ajouter une nouvelle ressource' }}</h2>
+    <form (ngSubmit)="isEditing ? onUpdateResource() : onAddResource()">
+      <div>
+        <label>Nom:</label>
+        <input [(ngModel)]="selectedResource?.name || newResource.name" name="name" required />
+      </div>
+      <div>
+        <label>Quantité:</label>
+        <input type="number" [(ngModel)]="selectedResource?.quantity || newResource.quantity" name="quantity" required />
+      </div>
+      <div>
+        <label>Type:</label>
+        <select [(ngModel)]="selectedResource?.type || newResource.type" name="type">
+          <option value="MATERIAL">MATERIAL</option>
+          <option value="SERVICE">SERVICE</option>
+          <option value="TOOL">TOOL</option>
+        </select>
+      </div>
+      <div>
+        <label>Provider:</label>
+        <input [(ngModel)]="selectedResource?.provider || newResource.provider" name="provider" />
+      </div>
+      <button type="submit">{{ isEditing ? 'Mettre à jour' : 'Ajouter' }}</button>
+      <button type="button" (click)="onCancelEdit()">Annuler</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Quantity</th>
+      <th>Type</th>
+      <th>Provider</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let resource of resources">
+      <td>{{ resource.name }}</td>
+      <td>{{ resource.quantity }}</td>
+      <td>{{ resource.type }}</td>
+      <td>{{ resource.provider }}</td>
+      <td>
+        <button (click)="onEditResource(resource)">Modifier</button>
+        <button (click)="onDeleteResource(resource.id)">Supprimer</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
