@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import {User} from "../../../core/models/user";
 import {NgIf} from "@angular/common";
 import {Role} from "../../../core/enums/role";
+import {MatFormField} from "@angular/material/form-field";
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule, MatCardTitle} from "@angular/material/card";
 
 
 @Component({
@@ -14,7 +18,14 @@ import {Role} from "../../../core/enums/role";
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    NgIf
+    NgIf,
+    MatFormField,
+    MatButtonModule,
+    MatInputModule,
+    MatCardContent,
+    MatCardTitle,
+    MatCardHeader,
+    MatCardModule
   ],
   styleUrls: ['./signup.component.scss']
 })

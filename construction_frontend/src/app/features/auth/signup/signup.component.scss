@@ -1,0 +1,26 @@
+.text-center {
+  text-align: center;
+  margin-bottom: 1rem; /* Espace entre le titre et le formulaire */
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 80%; /* Ajuste cette valeur selon tes besoins */
+  max-width: 500px; /* Largeur maximale pour ne pas trop s'étirer */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mt-5 {
+  margin-top: 5rem;
+}
