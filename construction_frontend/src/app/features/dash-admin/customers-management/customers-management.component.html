@@ -1,1 +1,36 @@
-<p>customers-management works!</p>
+<div class="customer-management">
+  <h1>Customers Management</h1>
+
+  <!-- Button to add a new customer -->
+  <button *ngIf="!editingCustomer && !showAddForm" (click)="showAddForm = true">Add Customer</button>
+
+  <!-- Form for adding or editing a customer -->
+  <div *ngIf="showAddForm || editingCustomer">
+    <form [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+      <label for="fullName">Full Name:</label>
+      <input id="fullName" formControlName="fullName" />
+
+      <label for="username">Username:</label>
+      <input id="username" formControlName="username" />
+
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" />
+
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Customer list -->
+  <ul>
+    <li *ngFor="let customer of customers">
+      {{ customer.fullName }} ({{ customer.email }}) {{ customer.id }}
+      <button (click)="editCustomer(customer)">Edit</button>
+      <button (click)="deleteCustomer(customer.id!)">Delete</button>
+    </li>
+  </ul>
+
+</div>
