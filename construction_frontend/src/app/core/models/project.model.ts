@@ -1,3 +1,5 @@
+import {Task} from "./task";
+
 export interface Project {
     id: number;
     name: string;
@@ -5,4 +7,7 @@ export interface Project {
     startDate: string;
     endDate: string;
     budget: number;
-  }
+    tasks: Task[];
+
+
+}
