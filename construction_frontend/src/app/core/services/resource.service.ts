@@ -38,5 +38,4 @@ export class ResourceService {
   getResourceById(id: number): Observable<Resource> {
     return this.http.get<Resource>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
-
 }

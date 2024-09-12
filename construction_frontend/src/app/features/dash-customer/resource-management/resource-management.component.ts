@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import {Observable} from "rxjs";
-import {Resource} from "../../../core/models/resource";
-import {ResourceService} from "../../../core/services/resource.service";
-import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { ResourceService } from '../../../core/services/resource.service';
+import { Resource } from '../../../core/models/resource';
+import { FormsModule } from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
+import {ResourceType} from "../../../core/enums/ResourceType";
 
 @Component({
   selector: 'app-resource-management',
@@ -14,9 +14,9 @@ import {NgForOf, NgIf} from "@angular/common";
     NgForOf
   ],
   templateUrl: './resource-management.component.html',
-  styleUrl: './resource-management.component.scss'
+  styleUrls: ['./resource-management.component.scss']
 })
-export class ResourceManagementComponent {
+export class ResourceManagementComponent implements OnInit {
 
   resources: Resource[] = [];
   selectedResource?: Resource;
@@ -24,10 +24,12 @@ export class ResourceManagementComponent {
   newResource: Resource = {
     name: '',
     quantity: 0,
-    type: 'MATERIAL',
+    type: ResourceType.MATERIAL,
     provider: '',
     task: []
   };
+
+  resourceTypes = ResourceType;
 
   constructor(private resourceService: ResourceService) { }
 
@@ -38,7 +40,7 @@ export class ResourceManagementComponent {
   loadResources(): void {
     this.resourceService.getResources().subscribe(
       (resources) => this.resources = resources,
-      (error) => console.error('Erreur lors du chargement des ressources', error)
+      (error) => console.error(`Error loading resources: ${error}`)
     );
   }
 
@@ -46,15 +48,9 @@ export class ResourceManagementComponent {
     this.resourceService.addResource(this.newResource).subscribe(
       () => {
         this.loadResources();
-        this.newResource = {
-          name: '',
-          quantity: 0,
-          type: 'MATERIAL',
-          provider: '',
-          task: []
-        };
+        this.resetNewResource();
       },
-      (error) => console.error('Erreur lors de l\'ajout de la ressource', error)
+      (error) => console.error(`Error adding resource: ${error}`)
     );
   }
 
@@ -64,23 +60,22 @@ export class ResourceManagementComponent {
   }
 
   onUpdateResource(): void {
-    if (this.selectedResource && this.selectedResource.id) {
+    if (this.selectedResource?.id) {
       this.resourceService.updateResource(this.selectedResource.id, this.selectedResource).subscribe(
         () => {
           this.loadResources();
-          this.selectedResource = undefined;
-          this.isEditing = false;
+          this.onCancelEdit();
         },
-        (error) => console.error('Erreur lors de la mise à jour de la ressource', error)
+        (error) => console.error(`Error updating resource: ${error}`)
       );
     }
   }
 
   onDeleteResource(id: number | undefined): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette ressource ?')) {
+    if (confirm('Are you sure you want to delete this resource?')) {
       this.resourceService.deleteResource(id).subscribe(
         () => this.loadResources(),
-        (error) => console.error('Erreur lors de la suppression de la ressource', error)
+        (error) => console.error(`Error deleting resource: ${error}`)
       );
     }
   }
@@ -88,5 +83,15 @@ export class ResourceManagementComponent {
   onCancelEdit(): void {
     this.isEditing = false;
     this.selectedResource = undefined;
+  }
+
+  resetNewResource(): void {
+    this.newResource = {
+      name: '',
+      quantity: 0,
+      type: ResourceType.MATERIAL,
+      provider: '',
+      task: []
+    };
   }
 }
