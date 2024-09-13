@@ -7,9 +7,9 @@ export interface Task {
   description? : string;
   startDate? : Date;
   endDate? : Date;
-  status? : Status;
+  status? : string;
 
-  project : Project ;
-
+  // project : Project ;
+  projectId: number;
   // resources : Resource[] ;
 }

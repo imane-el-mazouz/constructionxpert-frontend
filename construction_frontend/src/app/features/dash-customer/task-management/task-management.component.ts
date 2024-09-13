@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {Task} from "../../../core/models/task";
-import {TaskService} from "../../../core/services/task.service";
-import {FormsModule} from "@angular/forms";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import { Task } from '../../../core/models/task';
+import { TaskService } from '../../../core/services/task.service';
+import { FormsModule } from '@angular/forms';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-task-management',
@@ -14,22 +14,22 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
     NgIf
   ],
   templateUrl: './task-management.component.html',
-  styleUrl: './task-management.component.scss'
+  styleUrls: ['./task-management.component.scss'] // Fixed typo
 })
 export class TaskManagementComponent {
   tasks: Task[] = [];
   selectedTask?: Task;
   isEditing = false;
   formTask: Task = {
-    project: {
-      id: 0,
-      name: '',
-      tasks: []
-    }
+    id: 0,
+    description: '',
+    startDate: new Date(),
+    endDate: new Date(),
+    status: 'PENDING',
+    projectId: 0
   };
-  statusOptions = ['TO_DO', 'IN_PROGRESS', 'DONE'];
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.loadTasks();
@@ -37,14 +37,17 @@ export class TaskManagementComponent {
 
   loadTasks(): void {
     this.taskService.getAllTasks().subscribe(
-      tasks => this.tasks = tasks,
+      tasks => {
+        console.log('Loaded tasks:', tasks);
+        this.tasks = tasks;
+      },
       error => console.error('Error loading tasks', error)
     );
   }
 
   onEdit(task: Task): void {
     this.selectedTask = { ...task };
-    this.formTask = { ...task };  // Pré-remplir le formulaire avec les détails de la tâche sélectionnée
+    this.formTask = { ...task };
     this.isEditing = true;
   }
 
@@ -59,13 +62,14 @@ export class TaskManagementComponent {
 
   onAddTask(): void {
     this.formTask = {
-      project: {
-        id: 0,
-        name: '',
-        tasks: []
-      }
+      id: 0,
+      description: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      status: 'PENDING',
+      projectId: 0
     };
-    this.selectedTask = undefined;  // Réinitialiser la sélection de tâche
+    this.selectedTask = undefined;
     this.isEditing = false;
   }
 
@@ -74,7 +78,7 @@ export class TaskManagementComponent {
       this.taskService.updateTask(this.selectedTask.id!, this.formTask).subscribe(
         () => {
           this.loadTasks();
-          this.formTask = { project: { id: 0, name: '', tasks: [] } };
+          this.formTask = { id: 0, description: '', startDate: new Date(), endDate: new Date(), status: 'PENDING', projectId: 0 };
           this.selectedTask = undefined;
           this.isEditing = false;
         },
@@ -84,7 +88,7 @@ export class TaskManagementComponent {
       this.taskService.createTask(this.formTask).subscribe(
         () => {
           this.loadTasks();
-          this.formTask = { project: { id: 0, name: '', tasks: [] } };
+          this.formTask = { id: 0, description: '', startDate: new Date(), endDate: new Date(), status: 'PENDING', projectId: 0 };
           this.isEditing = false;
         },
         error => console.error('Error creating task', error)
