@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../../core/services/auth.service';
+import { Role } from '../../../core/enums/role';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +15,22 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  role: Role | null;
+
+  constructor(private authService: AuthService) {
+    this.role = this.authService.getUserRole();
+  }
+
   logout() {
     console.log('Logout clicked');
+    this.authService.logout();
+  }
+
+  isCustomer(): boolean {
+    return this.role === Role.CUSTOMER;
+  }
+
+  isAdmin(): boolean {
+    return this.role === Role.ADMIN;
   }
 }

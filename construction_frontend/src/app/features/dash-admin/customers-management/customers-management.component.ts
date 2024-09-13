@@ -9,6 +9,15 @@ import {MatList, MatListItem, MatListModule} from "@angular/material/list";
 import {MatLine, MatLineModule} from "@angular/material/core";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput, MatInputModule} from "@angular/material/input";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef, MatTable, MatTableModule
+} from "@angular/material/table";
 
 @Component({
   selector: 'app-customers-management',
@@ -24,7 +33,17 @@ import {MatInput, MatInputModule} from "@angular/material/input";
     MatListModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRow,
+    MatRowDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatTableModule
   ],
   templateUrl: './customers-management.component.html',
   styleUrls: ['./customers-management.component.scss']
@@ -34,6 +53,7 @@ export class CustomersManagementComponent {
   customerForm: FormGroup;
   editingCustomer: Customer | null = null;
   showAddForm: boolean = false;
+
 
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.customerForm = this.fb.group({
