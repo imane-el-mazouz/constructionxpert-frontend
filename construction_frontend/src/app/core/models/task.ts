@@ -1,5 +1,5 @@
 import {Status} from "../enums/status";
-import {Project} from "./project";
+import { Project } from "./project.model";
 import {Resource} from "./resource";
 
 export interface Task {
