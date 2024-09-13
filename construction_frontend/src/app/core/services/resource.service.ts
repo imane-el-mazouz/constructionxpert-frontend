@@ -72,7 +72,7 @@ export class ResourceService {
   }
 
   updateResource(id: number, resource: Resource): Observable<Resource> {
-    return this.http.put<Resource>(`${this.apiUrl}/${id}`, resource, { headers: this.getHeaders() })
+    return this.http.put<Resource>(`${this.apiUrl}/resource/${id}`, resource, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
   }
 
@@ -84,6 +84,10 @@ export class ResourceService {
   getResourceById(id: number): Observable<Resource> {
     return this.http.get<Resource>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
+  }
+
+  getResourcesByTaskId(taskId: number): Observable<Resource[]> {
+    return this.http.get<Resource[]>(`${this.apiUrl}/${taskId}/resources` , {headers : this.getHeaders()});
   }
 
   private handleError(error: any): Observable<never> {

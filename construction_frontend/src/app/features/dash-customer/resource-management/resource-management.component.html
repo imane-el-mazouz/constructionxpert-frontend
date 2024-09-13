@@ -1,3 +1,65 @@
+<!--<div class="resource-management">-->
+<!--  <h1>Resources Management</h1>-->
+
+<!--  &lt;!&ndash; Add / Edit Form &ndash;&gt;-->
+<!--  <div *ngIf="isEditing || !selectedResource">-->
+<!--    <h2>{{ isEditing ? 'Edit' : 'Add' }} Resource</h2>-->
+<!--    <form (ngSubmit)="isEditing ? onUpdateResource() : onAddResource()">-->
+<!--      <div>-->
+<!--        <label>Nom:</label>-->
+<!--        <input [(ngModel)]="selectedResource?.name || newResource.name" name="name" required />-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <label>Quantity:</label>-->
+<!--        <input type="number" [(ngModel)]="selectedResource?.quantity || newResource.quantity" name="quantity" required />-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <label>Type:</label>-->
+<!--        <select [(ngModel)]="selectedResource?.type || newResource.type" name="type">-->
+<!--          <option value="MATERIAL">MATERIAL</option>-->
+<!--          <option value="SERVICE">SERVICE</option>-->
+<!--          <option value="TOOL">TOOL</option>-->
+<!--        </select>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <label>Provider:</label>-->
+<!--        <input [(ngModel)]="selectedResource?.provider || newResource.provider" name="provider" />-->
+<!--      </div>-->
+<!--      <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>-->
+<!--      <button type="button" (click)="onCancelEdit()">Cancel</button>-->
+<!--    </form>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Resource Table &ndash;&gt;-->
+<!--  <table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>Id</th>-->
+<!--      <th>Nom</th>-->
+<!--      <th>Quantity</th>-->
+<!--      <th>Type</th>-->
+<!--      <th>Provider</th>-->
+<!--      <th>Task Id</th>-->
+<!--      <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let resource of resources">-->
+<!--      <td>{{ resource.id}}</td>-->
+<!--      <td>{{ resource.name }}</td>-->
+<!--      <td>{{ resource.quantity }}</td>-->
+<!--      <td>{{ resource.type }}</td>-->
+<!--      <td>{{ resource.provider }}</td>-->
+<!--      <td>{{resource.taskId}}</td>-->
+
+<!--      <td>-->
+<!--        <button (click)="onEditResource(resource)">Edit</button>-->
+<!--        <button (click)="onDeleteResource(resource.id)">Delete</button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
 <div class="resource-management">
   <h1>Resources Management</h1>
 
@@ -25,6 +87,12 @@
         <label>Provider:</label>
         <input [(ngModel)]="selectedResource?.provider || newResource.provider" name="provider" />
       </div>
+      <div>
+        <label>Task Id:</label>
+        <input type="number" [(ngModel)]="selectedResource?.taskId || newResource.taskId" name="taskId" required />
+<!--        <input [(ngModel)]="selectedResource?.name" name="name" required *ngIf="selectedResource" />-->
+
+      </div>
       <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
       <button type="button" (click)="onCancelEdit()">Cancel</button>
     </form>
@@ -34,19 +102,24 @@
   <table>
     <thead>
     <tr>
+      <th>Id</th>
       <th>Nom</th>
       <th>Quantity</th>
       <th>Type</th>
       <th>Provider</th>
+      <th>Task Id</th>
       <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let resource of resources">
+      <td>{{ resource.id }}</td>
       <td>{{ resource.name }}</td>
       <td>{{ resource.quantity }}</td>
       <td>{{ resource.type }}</td>
       <td>{{ resource.provider }}</td>
+      <td>{{ resource.taskId }}</td>
+
       <td>
         <button (click)="onEditResource(resource)">Edit</button>
         <button (click)="onDeleteResource(resource.id)">Delete</button>
