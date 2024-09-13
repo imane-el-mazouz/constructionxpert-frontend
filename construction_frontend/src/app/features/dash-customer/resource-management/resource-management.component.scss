@@ -1,0 +1,139 @@
+.resource-management-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    button {
+      height: 40px;
+      font-size: 14px;
+    }
+  }
+
+  .table-container {
+    overflow-x: auto; // Ensure responsiveness
+
+    .mat-elevation-z8 {
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      th {
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+        padding: 10px 16px;
+      }
+
+      td {
+        font-size: 13px;
+        padding: 10px 16px;
+      }
+
+      button {
+        color: #5c6bc0;
+
+        &:hover {
+          color: #1a237e;
+        }
+      }
+    }
+  }
+
+  .resource-form {
+    margin-top: 20px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+
+      mat-form-field {
+        width: 100%;
+
+        input {
+          font-size: 14px;
+        }
+      }
+
+      button {
+        align-self: start;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Media Queries for responsiveness
+@media only screen and (max-width: 768px) {
+  .resource-management-container {
+    padding: 10px;
+
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+
+    .table-container {
+      table {
+        td, th {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .resource-form {
+      form {
+        gap: 12px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .resource-management-container {
+    .header h1 {
+      font-size: 18px;
+    }
+
+    .table-container {
+      table {
+        td, th {
+          padding: 8px;
+        }
+      }
+    }
+
+    .resource-form {
+      form {
+        gap: 8px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

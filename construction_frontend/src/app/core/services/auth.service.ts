@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { Role } from "../enums/role";
 import { AuthenticationRequest } from "../models/authentication-request";
 import { User } from "../models/user";
+import {Route, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private http: HttpClient
+    private http: HttpClient ,
+    private router : Router
   ) {}
 
   setToken(token: string): void {
@@ -47,6 +49,7 @@ export class AuthService {
     return null;
   }
 
+
   clearToken(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.tokenKey);
@@ -75,6 +78,7 @@ export class AuthService {
 
 
   logout(): void {
-    this.clearToken();
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 }
