@@ -18,4 +18,20 @@ export class ProjectService {
   deleteProject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getProjectById(id: number): Observable<Project> {
+    return this.http.get<Project>(`${this.apiUrl}/${id}`);
+  }
+  
+  createProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.apiUrl, project);
+  }
+  
+  updateProject(id: number, project: Project): Observable<Project> {
+    return this.http.put<Project>(`${this.apiUrl}/${id}`, project);
+  }
+  
+  existProject(id: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${id}/exist`);
+  }
 }

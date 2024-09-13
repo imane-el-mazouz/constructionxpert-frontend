@@ -105,7 +105,6 @@ body {
   background-color: $primary-color;
 }
 
-// Accessibility
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

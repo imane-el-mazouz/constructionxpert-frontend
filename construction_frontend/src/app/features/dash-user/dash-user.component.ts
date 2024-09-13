@@ -21,6 +21,7 @@ import { StatCardComponent } from '../../shared/components/stat-card/stat-card.c
 import { ToolbarComponent } from '../../shared/components/toolbar/toolbar.component';
 import { ProjectCardComponent } from '../projects/project-card/project-card.component';
 import { Project } from '../../core/models/project.model';
+import { ProjectListComponent } from "../projects/project-list/project-list.component";
 
 @Component({
   selector: 'app-dash-user',
@@ -39,8 +40,9 @@ import { Project } from '../../core/models/project.model';
     ToolbarComponent,
     SidebarComponent,
     ProjectCardComponent,
-    StatCardComponent
-  ],
+    StatCardComponent,
+    ProjectListComponent
+],
   templateUrl: './dash-user.component.html',
   styleUrls: ['./dash-user.component.scss']
 })
