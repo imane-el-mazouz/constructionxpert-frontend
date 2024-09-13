@@ -3,6 +3,21 @@ import { Task } from '../../../core/models/task';
 import { TaskService } from '../../../core/services/task.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import {MatButton, MatButtonModule, MatIconButton} from "@angular/material/button";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable, MatTableModule
+} from "@angular/material/table";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {MatTooltip, MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
+import {MatInput, MatInputModule} from "@angular/material/input";
 
 @Component({
   selector: 'app-task-management',
@@ -11,10 +26,28 @@ import { DatePipe, NgForOf, NgIf } from '@angular/common';
     FormsModule,
     NgForOf,
     DatePipe,
-    NgIf
+    NgIf,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatFormField,
+    MatTableModule,
+    MatColumnDef,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderCell,
+    MatIconButton,
+    MatIconModule,
+    MatTooltipModule,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatPaginatorModule,
+    MatInputModule
   ],
   templateUrl: './task-management.component.html',
-  styleUrls: ['./task-management.component.scss'] // Fixed typo
+  styleUrls: ['./task-management.component.scss']
 })
 export class TaskManagementComponent {
   tasks: Task[] = [];
@@ -28,6 +61,7 @@ export class TaskManagementComponent {
     status: 'PENDING',
     projectId: 0
   };
+  displayedColumns: string[] = ['id', 'description', 'startDate', 'endDate', 'status','projectId','actions'];
 
   constructor(private taskService: TaskService) {}
 

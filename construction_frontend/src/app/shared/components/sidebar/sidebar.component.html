@@ -1,34 +1,81 @@
+<!--<nav class="sidebar">-->
+<!--    <ul class="nav-list">-->
+<!--      <li class="nav-item" routerLinkActive="active">-->
+<!--        <a routerLink="/dashboard">-->
+<!--          <mat-icon>dashboard</mat-icon>-->
+<!--          <span>Dashboard</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" routerLinkActive="active" >-->
+<!--        <a routerLink="/projects">-->
+<!--          <mat-icon>folder</mat-icon>-->
+<!--          <span>Projects</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" routerLinkActive="active">-->
+<!--        <a routerLink="/tasks">-->
+<!--          <mat-icon>list</mat-icon>-->
+<!--          <span>Tasks</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" routerLinkActive="active">-->
+<!--        <a routerLink="/resources">-->
+<!--          <mat-icon>people</mat-icon>-->
+<!--          <span>Resources</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    <div class="logout-container">-->
+<!--      <button mat-button class="logout-button" (click)="logout()">-->
+<!--        <mat-icon>exit_to_app</mat-icon>-->
+<!--        <span>Log out</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </nav>-->
+
 <nav class="sidebar">
-    <ul class="nav-list">
-      <li class="nav-item" routerLinkActive="active">
-        <a routerLink="/dashboard">
-          <mat-icon>dashboard</mat-icon>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a routerLink="/projects">
-          <mat-icon>folder</mat-icon>
-          <span>Projects</span>
-        </a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a routerLink="/tasks">
-          <mat-icon>list</mat-icon>
-          <span>Tasks</span>
-        </a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a routerLink="/resources">
-          <mat-icon>people</mat-icon>
-          <span>Resources</span>
-        </a>
-      </li>
-    </ul>
-    <div class="logout-container">
-      <button mat-button class="logout-button" (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Log out</span>
-      </button>
-    </div>
-  </nav>
+  <ul class="nav-list">
+    <li class="nav-item" routerLinkActive="active">
+      <a routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <!-- Links for Customer role -->
+    <li class="nav-item" routerLinkActive="active" *ngIf="isCustomer()">
+      <a routerLink="/projects">
+        <mat-icon>folder</mat-icon>
+        <span>Projects</span>
+      </a>
+    </li>
+
+    <!-- Links for Admin role -->
+    <li class="nav-item" routerLinkActive="active" *ngIf="isAdmin()">
+      <a routerLink="/admin-settings">
+        <mat-icon>settings</mat-icon>
+        <span>Admin Settings</span>
+      </a>
+    </li>
+
+    <li class="nav-item" routerLinkActive="active">
+      <a routerLink="/tasks">
+        <mat-icon>list</mat-icon>
+        <span>Tasks</span>
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a routerLink="/resources">
+        <mat-icon>people</mat-icon>
+        <span>Resources</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="logout-container">
+    <button mat-button class="logout-button" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Log out</span>
+    </button>
+  </div>
+</nav>

@@ -1,63 +1,49 @@
-<div class="dashboard-container">
-    <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
-  
-    <mat-sidenav-container class="dashboard-sidenav-container">
-      <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
-        <app-sidebar></app-sidebar>
-      </mat-sidenav>
-  
-      <mat-sidenav-content>
-        <div class="dashboard-content">
-          <div class="content-header">
-            <h1 class="dashboard-title">Projects Overview</h1>
-            <button mat-raised-button color="primary" class="new-project-btn" (click)="openNewProjectDialog()">
-              <mat-icon>add</mat-icon>
-              <span>New Project</span>
-            </button>
-          </div>
-  
-          <div class="stat-cards-container">
-            <app-stat-card *ngFor="let stat of projectStats" [stat]="stat"></app-stat-card>
-          </div>
-  
-          <div class="search-sort-container">
-            <mat-form-field appearance="outline" class="search-field">
-              <mat-label>Search projects</mat-label>
-              <input matInput type="search" [(ngModel)]="searchTerm" (ngModelChange)="filterProjects()">
-              <button mat-icon-button matSuffix (click)="clearSearch()" *ngIf="searchTerm">
-                <mat-icon>close</mat-icon>
-              </button>
-              <mat-icon matSuffix *ngIf="!searchTerm">search</mat-icon>
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline" class="sort-field">
-              <mat-label>Sort by</mat-label>
-              <mat-select [(ngModel)]="sortBy" (selectionChange)="sortProjects()">
-                <mat-option value="name">Name</mat-option>
-                <mat-option value="startDate">Start Date</mat-option>
-                <mat-option value="endDate">End Date</mat-option>
-                <mat-option value="budget">Budget</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-  
-          <div class="projects-container">
-            <app-project-card
-              *ngFor="let project of pagedProjects"
-              [project]="project"
-              (deleteProject)="onDeleteProject($event)"
-            ></app-project-card>
-          </div>
-          <app-project-list></app-project-list>
-  
-          <mat-paginator [length]="filteredProjects.length"
-                         [pageSize]="pageSize"
-                         [pageSizeOptions]="[6, 12, 18, 24]"
-                         (page)="onPageChange($event)"
-                         aria-label="Select page of projects">
-          </mat-paginator>
-        </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+
+  <div class="dashboard-content">
+    <div class="content-header">
+      <h1 class="dashboard-title">Projects Overview</h1>
+      <button mat-raised-button color="primary" class="new-project-btn" (click)="openNewProjectDialog()">
+        <mat-icon>add</mat-icon>
+        <span>New Project</span>
+      </button>
+    </div>
+
+    <div class="stat-cards-container">
+      <app-stat-card *ngFor="let stat of projectStats" [stat]="stat"></app-stat-card>
+    </div>
+
+    <div class="search-sort-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search projects</mat-label>
+        <input matInput type="search" [(ngModel)]="searchTerm" (ngModelChange)="filterProjects()">
+        <button mat-icon-button matSuffix (click)="clearSearch()" *ngIf="searchTerm">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matSuffix *ngIf="!searchTerm">search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="sort-field">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="sortProjects()">
+          <mat-option value="name">Name</mat-option>
+          <mat-option value="startDate">Start Date</mat-option>
+          <mat-option value="endDate">End Date</mat-option>
+          <mat-option value="budget">Budget</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="projects-container">
+      <app-project-card
+        *ngFor="let project of pagedProjects"
+        [project]="project"
+        (deleteProject)="onDeleteProject($event)"
+      ></app-project-card>
+    </div>
+    <mat-paginator [length]="filteredProjects.length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[6, 12, 18, 24]"
+                   (page)="onPageChange($event)"
+                   aria-label="Select page of projects">
+    </mat-paginator>
   </div>
-  

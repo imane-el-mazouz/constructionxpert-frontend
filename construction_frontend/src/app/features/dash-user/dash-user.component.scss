@@ -4,97 +4,96 @@
     height: 100vh;
     background-color: #f5f7fa;
   }
-  
+
   .dashboard-sidenav-container {
     flex: 1;
     margin-top: 64px;
   }
-  
+
   .dashboard-content {
     padding: 24px;
   }
-  
+
   .content-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
   }
-  
+
   .dashboard-title {
     font-size: 24px;
     font-weight: 500;
     color: #333333;
     margin: 0;
   }
-  
+
   .new-project-btn {
     height: 40px;
     padding: 0 16px;
     border-radius: 20px;
     font-weight: 500;
-  
+
     mat-icon {
       margin-right: 8px;
     }
   }
-  
+
   .stat-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
     margin-bottom: 24px;
   }
-  
+
   .search-sort-container {
     display: flex;
     gap: 16px;
     margin-bottom: 24px;
   }
-  
+
   .search-field {
     flex-grow: 1;
   }
-  
+
   .sort-field {
     min-width: 150px;
   }
-  
+
   .projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
     margin-bottom: 24px;
   }
-  
+
   mat-paginator {
     background-color: transparent;
   }
-  
+
   @media (max-width: 768px) {
     .dashboard-content {
       padding: 16px;
     }
-  
+
     .content-header {
       flex-direction: column;
       align-items: flex-start;
     }
-  
+
     .dashboard-title {
       margin-bottom: 16px;
     }
-  
+
     .new-project-btn {
       width: 100%;
     }
-  
+
     .search-sort-container {
       flex-direction: column;
     }
-  
+
     .sort-field {
       width: 100%;
     }
   }
-  

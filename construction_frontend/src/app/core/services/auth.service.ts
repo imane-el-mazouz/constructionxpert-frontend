@@ -74,4 +74,7 @@ export class AuthService {
   // }
 
 
+  logout(): void {
+    this.clearToken();
+  }
 }
