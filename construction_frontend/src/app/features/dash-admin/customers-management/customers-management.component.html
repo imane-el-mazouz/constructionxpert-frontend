@@ -1,7 +1,5 @@
 
 <div class="customer-management">
-  <h1>Customers Management</h1>
-
 
   <div *ngIf="showAddForm || editingCustomer">
     <form [formGroup]="customerForm" (ngSubmit)="saveCustomer()">

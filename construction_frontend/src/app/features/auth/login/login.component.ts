@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
         if (role === 'ADMIN') {
           this.router.navigate(['/dashboard']);
         } else if (role === 'CUSTOMER') {
-          this.router.navigate(['/customers']);
+          this.router.navigate(['/dashboard']);
         } else {
           this.errorMessage = `Role undefined: ${role}`;
         }
