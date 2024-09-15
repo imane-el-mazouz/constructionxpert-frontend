@@ -61,7 +61,7 @@
 <!--</div>-->
 <div class="project-list-container">
   <div class="header">
-    <h2>Project List</h2>
+    <h2 style="color:#4051B5 ">Project List</h2>
     <button mat-raised-button color="primary" (click)="openProjectDialog()">Add New Project</button>
   </div>
 
@@ -75,7 +75,7 @@
 
   <div class="table-container">
     <table mat-table [dataSource]="projects" class="mat-elevation-z8 responsive-table">
-      <!-- Name Column -->
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let project"> {{ project.name }} </td>
@@ -119,7 +119,7 @@
   <mat-paginator [length]="projects.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
 
   <div *ngIf="selectedProjectTasks.length > 0" class="task-list-container">
-    <h3>Tasks for Project ID {{selectedProjectId}}</h3>
+    <h3 style="color: #4051B5">Tasks for Project ID {{selectedProjectId}}</h3>
     <table mat-table [dataSource]="selectedProjectTasks">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
