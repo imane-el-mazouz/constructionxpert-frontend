@@ -1,3 +1,64 @@
+<!--<div class="project-list-container">-->
+<!--  <div class="header">-->
+<!--    <h2>Project List</h2>-->
+<!--    <button mat-raised-button color="primary" (click)="openProjectDialog()">Add New Project</button>-->
+<!--  </div>-->
+
+<!--  <div class="filter">-->
+<!--    <mat-form-field appearance="outline">-->
+<!--      <mat-label>Search Projects</mat-label>-->
+<!--      <input matInput (input)="applyFilter($event)" placeholder="Search by name, date, or budget">-->
+<!--      <mat-icon matSuffix>search</mat-icon>-->
+<!--    </mat-form-field>-->
+<!--  </div>-->
+
+<!--  <div class="table-container">-->
+<!--    <table mat-table [dataSource]="projects" class="mat-elevation-z8 responsive-table">-->
+<!--      &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="name">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--        <td mat-cell *matCellDef="let project"> {{ project.name }} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Start Date Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="startDate">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Start Date </th>-->
+<!--        <td mat-cell *matCellDef="let project"> {{ project.startDate | date:'mediumDate' }} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; End Date Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="endDate">-->
+<!--        <th mat-header-cell *matHeaderCellDef> End Date </th>-->
+<!--        <td mat-cell *matCellDef="let project"> {{ project.endDate | date:'mediumDate' }} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Budget Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="budget">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Budget (USD) </th>-->
+<!--        <td mat-cell *matCellDef="let project"> {{ project.budget | currency }} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Actions Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="actions">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Actions </th>-->
+<!--        <td mat-cell *matCellDef="let project">-->
+<!--          <button mat-icon-button (click)="openProjectDialog(project)" matTooltip="Edit">-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button (click)="deleteProject(project)" matTooltip="Delete">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Table Header and Rows &ndash;&gt;-->
+<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--    </table>-->
+<!--  </div>-->
+
+<!--  <mat-paginator [length]="projects.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>-->
+<!--</div>-->
 <div class="project-list-container">
   <div class="header">
     <h2>Project List</h2>
@@ -20,25 +81,21 @@
         <td mat-cell *matCellDef="let project"> {{ project.name }} </td>
       </ng-container>
 
-      <!-- Start Date Column -->
       <ng-container matColumnDef="startDate">
         <th mat-header-cell *matHeaderCellDef> Start Date </th>
         <td mat-cell *matCellDef="let project"> {{ project.startDate | date:'mediumDate' }} </td>
       </ng-container>
 
-      <!-- End Date Column -->
       <ng-container matColumnDef="endDate">
         <th mat-header-cell *matHeaderCellDef> End Date </th>
         <td mat-cell *matCellDef="let project"> {{ project.endDate | date:'mediumDate' }} </td>
       </ng-container>
 
-      <!-- Budget Column -->
       <ng-container matColumnDef="budget">
         <th mat-header-cell *matHeaderCellDef> Budget (USD) </th>
         <td mat-cell *matCellDef="let project"> {{ project.budget | currency }} </td>
       </ng-container>
 
-      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let project">
@@ -48,14 +105,49 @@
           <button mat-icon-button (click)="deleteProject(project)" matTooltip="Delete">
             <mat-icon>delete</mat-icon>
           </button>
+          <button mat-icon-button (click)="viewTasks(project.id)" matTooltip="View Tasks">
+            <mat-icon>task</mat-icon>
+          </button>
         </td>
       </ng-container>
 
-      <!-- Table Header and Rows -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
 
   <mat-paginator [length]="projects.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+
+  <div *ngIf="selectedProjectTasks.length > 0" class="task-list-container">
+    <h3>Tasks for Project ID {{selectedProjectId}}</h3>
+    <table mat-table [dataSource]="selectedProjectTasks">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let task"> {{task.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let task"> {{task.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef> Start Date </th>
+        <td mat-cell *matCellDef="let task"> {{task.startDate | date:'mediumDate'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> End Date </th>
+        <td mat-cell *matCellDef="let task"> {{task.endDate | date:'mediumDate'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let task"> {{task.status}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['id', 'description', 'startDate', 'endDate', 'status']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'description', 'startDate', 'endDate', 'status'];"></tr>
+    </table>
+  </div>
 </div>
