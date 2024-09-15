@@ -35,7 +35,7 @@
 
 <nav class="sidebar">
   <ul class="nav-list">
-    <li class="nav-item" routerLinkActive="active" *ngIf="isCustomer()">
+    <li class="nav-item" routerLinkActive="active">
       <a routerLink="/dashboard">
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
@@ -86,6 +86,8 @@
 <!--      </a>-->
 <!--    </button>-->
 <!--  </div>-->
+
+
 
   <div class="logout-container">
     <button mat-button class="logout-button" (click)="logout()">

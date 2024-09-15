@@ -11,7 +11,7 @@
 
     h1 {
       font-size: 24px;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     button {
@@ -21,7 +21,7 @@
   }
 
   .table-container {
-    overflow-x: auto; // Ensure responsiveness
+    overflow-x: auto;
 
     .mat-elevation-z8 {
       border-radius: 8px;
@@ -52,7 +52,11 @@
   }
 
   .resource-form {
-    margin-top: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 
     h2 {
       font-size: 24px;
@@ -81,7 +85,6 @@
   }
 }
 
-// Media Queries for responsiveness
 @media only screen and (max-width: 768px) {
   .resource-management-container {
     padding: 10px;
@@ -105,34 +108,36 @@
     }
 
     .resource-form {
+      max-width: 100%;
+      padding: 10px;
       form {
         gap: 12px;
       }
     }
   }
-}
 
-@media only screen and (max-width: 480px) {
-  .resource-management-container {
-    .header h1 {
-      font-size: 18px;
-    }
+  @media only screen and (max-width: 480px) {
+    .resource-management-container {
+      .header h1 {
+        font-size: 18px;
+      }
 
-    .table-container {
-      table {
-        td, th {
-          padding: 8px;
+      .table-container {
+        table {
+          td, th {
+            padding: 8px;
+          }
         }
       }
-    }
 
-    .resource-form {
-      form {
-        gap: 8px;
-      }
+      .resource-form {
+        form {
+          gap: 8px;
+        }
 
-      button {
-        width: 100%;
+        button {
+          width: 100%;
+        }
       }
     }
   }
