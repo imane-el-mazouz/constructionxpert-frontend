@@ -14,6 +14,7 @@ import { Project } from '../../../core/models/project.model';
 import { ProjectFormComponent } from '../project-form/project-form.component';
 import { CommonModule } from '@angular/common';  // CommonModule to use built-in pipes
 import { FormsModule } from '@angular/forms';
+import {Task} from "../../../core/models/task";
 
 @Component({
   selector: 'app-project-list',
@@ -38,6 +39,8 @@ import { FormsModule } from '@angular/forms';
 export class ProjectListComponent implements OnInit {
   projects = new MatTableDataSource<Project>([]);
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'budget', 'actions'];
+  selectedProjectTasks: Task[] = [];
+  selectedProjectId: number | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -95,5 +98,16 @@ export class ProjectListComponent implements OnInit {
         }
       });
     }
+  }
+  viewTasks(projectId: number): void {
+    this.selectedProjectId = projectId;
+    this.projectService.getTasksByProjectId(projectId).subscribe({
+      next: (tasks) => {
+        this.selectedProjectTasks = tasks;
+      },
+      error: () => {
+        this.snackBar.open('Error loading tasks', 'Close', { duration: 3000 });
+      }
+    });
   }
 }

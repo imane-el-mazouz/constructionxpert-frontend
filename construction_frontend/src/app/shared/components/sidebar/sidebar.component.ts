@@ -16,15 +16,17 @@ import { Role } from '../../../core/enums/role';
 })
 export class SidebarComponent {
   role: Role | null;
+  isLoggedIn: boolean = false;
+
 
   constructor(private authService: AuthService) {
     this.role = this.authService.getUserRole();
   }
 
-  logout() {
-    console.log('Logout clicked');
-    this.authService.logout();
-  }
+  // logout() {
+  //   console.log('Logout clicked');
+  //   this.authService.logout();
+  // }
 
   isCustomer(): boolean {
     return this.role === Role.CUSTOMER;
@@ -32,5 +34,20 @@ export class SidebarComponent {
 
   isAdmin(): boolean {
     return this.role === Role.ADMIN;
+  }
+
+  checkLoginStatus(): void {
+    this.isLoggedIn = !!this.authService.getToken();
+    this.role = this.authService.getUserRole();
+  }
+
+  logout(): void {
+    console.log('Logout clicked');
+    this.authService.logout();
+    this.checkLoginStatus();
+  }
+
+  login(): void {
+    this.authService.logout();
   }
 }

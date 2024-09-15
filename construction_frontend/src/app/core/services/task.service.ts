@@ -74,12 +74,16 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Task } from "../models/task";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import {Resource} from "../models/resource";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   private apiUrl = 'http://localhost:8888/TASK-SERVICE/api/tasks';
+  private baseUrl = 'http://localhost:8888/RESOURCE-SERVICE/api/resources';
+
+
 
   constructor(private http: HttpClient) { }
 
@@ -125,5 +129,11 @@ export class TaskService {
     console.error('An error occurred', error);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+
+  getResourcesByTaskId(taskId: number): Observable<Resource[]> {
+    return this.http.get<Resource[]>(`${this.baseUrl}/task/${taskId}` , {headers : this.getHeaders()});
+  }
+
 
 }

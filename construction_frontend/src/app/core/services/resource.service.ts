@@ -88,10 +88,13 @@ export class ResourceService {
       .pipe(catchError(this.handleError));
   }
 
-  getResourcesByTaskId(taskId: number): Observable<Resource[]> {
-    return this.http.get<Resource[]>(`${this.apiUrl}/${taskId}/resources` , {headers : this.getHeaders()});
-  }
+  // getResourcesByTaskId(taskId: number): Observable<Resource[]> {
+  //   return this.http.get<Resource[]>(`${this.apiUrl}/${taskId}/resources` , {headers : this.getHeaders()});
+  // }
 
+  getResourcesByTaskId(taskId: number): Observable<Resource[]> {
+    return this.http.get<Resource[]>(`${this.apiUrl}/task/${taskId}` , {headers : this.getHeaders()});
+  }
 
   private handleError(error: any): Observable<never> {
     console.error('An error occurred', error);
