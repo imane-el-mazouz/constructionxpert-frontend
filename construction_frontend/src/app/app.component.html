@@ -1,13 +1,16 @@
-<div class="dashboard-container">
-  <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
-  <mat-sidenav-container class="dashboard-sidenav-container">
-    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
-      <app-sidebar></app-sidebar>
-    </mat-sidenav>
+<!--<div class="dashboard-container">-->
+<!--  <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>-->
+<!--  <mat-sidenav-container class="dashboard-sidenav-container">-->
+<!--    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">-->
+<!--      <app-sidebar></app-sidebar>-->
+<!--    </mat-sidenav>-->
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+<!--    <mat-sidenav-content>-->
+<!--      <router-outlet></router-outlet>-->
+<!--    </mat-sidenav-content>-->
+<!--  </mat-sidenav-container>-->
+<!--</div>-->
 
+<main>
+  <router-outlet></router-outlet>
+</main>

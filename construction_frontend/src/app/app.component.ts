@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NavBarComponent} from "./shared/nav-bar/nav-bar.component";
-import {FooterComponent} from "./shared/footer/footer.component";
 import { DashUserComponent } from "./features/dash-user/dash-user.component";
 import {FormsModule} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
@@ -26,31 +25,34 @@ import {Subject} from "rxjs";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavBarComponent, FooterComponent, DashUserComponent, FormsModule, MatButton, MatFormField, MatIcon, MatIconButton, MatInput, MatLabel, MatOption, MatPaginator, MatSelect, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSuffix, NgForOf, NgIf, ProjectCardComponent, ProjectListComponent, SidebarComponent, StatCardComponent, ToolbarComponent],
+  imports: [RouterOutlet, NavBarComponent ,DashUserComponent, FormsModule, MatButton, MatFormField, MatIcon, MatIconButton, MatInput, MatLabel, MatOption, MatPaginator, MatSelect, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSuffix, NgForOf, NgIf, ProjectCardComponent, ProjectListComponent, SidebarComponent, StatCardComponent, ToolbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
   title = 'construction_frontend';
-  private destroy$ = new Subject<void>();
-  isMobile = false;
 
-  constructor(private breakpointObserver: BreakpointObserver,
-              private snackBar: MatSnackBar) {
-
-  }
   ngOnInit(): void {
-    this.breakpointObserver
-      .observe([Breakpoints.Handset])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
   }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  // private destroy$ = new Subject<void>();
+  // isMobile = false;
+  //
+  // constructor(private breakpointObserver: BreakpointObserver,
+  //             private snackBar: MatSnackBar) {
+  //
+  // }
+  // ngOnInit(): void {
+  //   this.breakpointObserver
+  //     .observe([Breakpoints.Handset])
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe(result => {
+  //       this.isMobile = result.matches;
+  //     });
+  // }
+  //
+  // ngOnDestroy() {
+  //   this.destroy$.next();
+  //   this.destroy$.complete();
+  // }
 
 }
