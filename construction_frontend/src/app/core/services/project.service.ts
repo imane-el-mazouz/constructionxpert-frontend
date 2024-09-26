@@ -1,53 +1,54 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { Project } from '../models/project.model';
-import {Task} from "../models/task";
-import {catchError} from "rxjs/operators";
+import { Task } from '../models/task';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8888/PROJECT-SERVICE/api/projects';
-  private baseUrl = 'http://localhost:8888/TASK-SERVICE/api/tasks';
-
-
-  private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
-  constructor(private http: HttpClient) { }
+  private apiUrl = `${environment.apiUrl}/projects`;
+  private taskUrl = `${environment.apiUrl}/tasks`;
+  private http = inject(HttpClient);
 
   getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.apiUrl, { headers: this.getHeaders() });
-  }
-
-  deleteProject(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<Project[]>(this.apiUrl)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
   getProjectById(id: number): Observable<Project> {
-    return this.http.get<Project>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<Project>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
   createProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrl, project, { headers: this.getHeaders() });
+    return this.http.post<Project>(this.apiUrl, project)
+      .pipe(catchError(this.handleError));
   }
 
   updateProject(id: number, project: Project): Observable<Project> {
-    return this.http.put<Project>(`${this.apiUrl}/${id}`, project, { headers: this.getHeaders() });
+    return this.http.put<Project>(`${this.apiUrl}/${id}`, project)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteProject(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
   }
 
   existProject(id: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/${id}/exist`, { headers: this.getHeaders() });
+    return this.http.get<boolean>(`${this.apiUrl}/${id}/exist`)
+      .pipe(catchError(this.handleError));
   }
+
   getTasksByProjectId(projectId: number): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.baseUrl}/project/${projectId}`, { headers: this.getHeaders() })
+    return this.http.get<Task[]>(`${this.taskUrl}/project/${projectId}`)
       .pipe(catchError(this.handleError));
   }
 

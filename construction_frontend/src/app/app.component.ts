@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {NavBarComponent} from "./shared/nav-bar/nav-bar.component";
-import {FooterComponent} from "./shared/footer/footer.component";
+import {NavBarComponent} from "./shared/components/nav-bar/nav-bar.component";
+import {FooterComponent} from "./shared/components/footer/footer.component";
 import { DashUserComponent } from "./features/dash-user/dash-user.component";
 import {FormsModule} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
