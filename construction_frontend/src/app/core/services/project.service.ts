@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { Project } from '../models/project.model';
 import {Task} from "../models/task";
@@ -51,8 +51,43 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
+  getFilteredProjects(
+    minBudget?: number,
+    maxBudget?: number,
+    startDate?: string,
+    endDate?: string,
+    page: number = 0,
+    size: number = 10,
+    sortBy: string = 'budget',
+    direction: string = 'asc'
+  ): Observable<Project[]> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy)
+      .set('direction', direction);
+
+    if (minBudget !== undefined) {
+      params = params.set('minBudget', minBudget.toString());
+    }
+    if (maxBudget !== undefined) {
+      params = params.set('maxBudget', maxBudget.toString());
+    }
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+
+    return this.http.get<Project[]>(this.apiUrl, { headers: this.getHeaders(), params })
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: any): Observable<never> {
     console.error('An error occurred', error);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+
 }

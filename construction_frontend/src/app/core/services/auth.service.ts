@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 import { Role } from "../enums/role";
 import { AuthenticationRequest } from "../models/authentication-request";
 import { User } from "../models/user";
-import {Route, Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class AuthService {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private http: HttpClient ,
-    private router : Router
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   setToken(token: string): void {
@@ -41,14 +41,15 @@ export class AuthService {
   }
 
   getUserRole(): Role | null {
-    const token = this.getToken();
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role as Role;
+    if (isPlatformBrowser(this.platformId)) {
+      const token = this.getToken();
+      if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.role as Role;
+      }
     }
     return null;
   }
-
 
   clearToken(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -66,19 +67,11 @@ export class AuthService {
     return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', user);
   }
 
-  // signup(fullName: string, username: string, email: string, password: string): Observable<any> {
-  //   return this.http.post('http://localhost:8888/USER-SERVICE/api/auth/signup', {
-  //     fullName,
-  //     username,
-  //     email,
-  //     password,
-  //     role: Role.CUSTOMER
-  //   });
-  // }
-
-
   logout(): void {
-    localStorage.removeItem('authToken');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.userRoleKey);
+    }
     this.router.navigate(['/login']);
   }
 }

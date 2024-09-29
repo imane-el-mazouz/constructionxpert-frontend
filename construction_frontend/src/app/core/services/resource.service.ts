@@ -44,6 +44,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Resource } from "../models/resource";
+import {Page} from "../models/page";
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,28 @@ export class ResourceService {
 
   getResourcesByTaskId(taskId: number): Observable<Resource[]> {
     return this.http.get<Resource[]>(`${this.apiUrl}/task/${taskId}` , {headers : this.getHeaders()});
+  }
+
+  getFilteredResources(
+    provider?: string,
+    minQuantity?: number,
+    maxQuantity?: number,
+    page: number = 0,
+    size: number = 10,
+    sortBy: string = 'quantity',
+    direction: string = 'asc'
+  ): Observable<Page<Resource>> {
+    const params = {
+      provider: provider || '',
+      minQuantity: minQuantity?.toString() || '',
+      maxQuantity: maxQuantity?.toString() || '',
+      page: page.toString(),
+      size: size.toString(),
+      sortBy,
+      direction
+    };
+
+    return this.http.get<Page<Resource>>(this.apiUrl, { headers: this.getHeaders(), params });
   }
 
   private handleError(error: any): Observable<never> {
