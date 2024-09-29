@@ -73,6 +73,7 @@ export class ProjectListComponent implements OnInit {
     this.projects.filter = filterValue.trim().toLowerCase();
   }
 
+
   openProjectDialog(project?: Project): void {
     const dialogRef = this.dialog.open(ProjectFormComponent, {
       width: '500px',

@@ -1,68 +1,185 @@
-<!--<div>-->
-<!--  <button (click)="onAddTask()">Add Task</button>-->
 
-<!--  &lt;!&ndash; Task List &ndash;&gt;-->
-<!--  <table>-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th>Id</th>-->
-<!--      <th>Description</th>-->
-<!--      <th>Start Date</th>-->
-<!--      <th>End Date</th>-->
-<!--      <th>Status</th>-->
-<!--      <th>Project Id</th>-->
-<!--      <th>Actions</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr *ngFor="let task of tasks">-->
-<!--      <td>{{ task.id }}</td>-->
-<!--      <td>{{ task.description }}</td>-->
-<!--      <td>{{ task.startDate | date }}</td>-->
-<!--      <td>{{ task.endDate | date }}</td>-->
-<!--      <td>{{ task.status }}</td>-->
-<!--      <td>{{ task.projectId }}</td>-->
-<!--      <td>-->
-<!--        <button (click)="onEdit(task)">Edit</button>-->
-<!--        <button (click)="onDelete(task)">Delete</button>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
+<!--<div class="task-list-container">-->
+
+<!--  <div class="header">-->
+<!--    <h2>Task Management</h2>-->
+<!--  </div>-->
+
+<!--  <div class="table-container">-->
+<!--    <table mat-table [dataSource]="tasks" class="mat-elevation-z8 responsive-table">-->
+
+<!--      <ng-container matColumnDef="id">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Id </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.id }} </td>-->
+<!--      </ng-container>-->
+
+
+<!--      <ng-container matColumnDef="description">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Description </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.description }} </td>-->
+<!--      </ng-container>-->
+
+
+<!--      <ng-container matColumnDef="startDate">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Start Date </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.startDate | date:'mediumDate' }} </td>-->
+<!--      </ng-container>-->
+
+
+<!--      <ng-container matColumnDef="endDate">-->
+<!--        <th mat-header-cell *matHeaderCellDef> End Date </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.endDate | date:'mediumDate' }} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="status">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Status </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.status }} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="projectId">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Project Id </th>-->
+<!--        <td mat-cell *matCellDef="let task"> {{ task.projectId }} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="actions">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Actions </th>-->
+<!--        <td mat-cell *matCellDef="let task">-->
+<!--          <button mat-icon-button (click)="onEdit(task)" matTooltip="Edit">-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button (click)="onDelete(task)" matTooltip="Delete">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-button (click)="viewResources(task.id)">-->
+<!--            <mat-icon style="margin-bottom: 20px">visibility</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </ng-container>-->
+
+<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--    </table>-->
+<!--  </div>-->
+
+<!--  <mat-paginator [length]="tasks" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>-->
+
+<!--  <div *ngIf="resources.length > 0" class="resource-list-container">-->
+<!--    <h3 style="color: #4051B5">Resources for Task ID {{selectedTaskId}}</h3>-->
+<!--    <table mat-table [dataSource]="resources">-->
+
+<!--      <ng-container matColumnDef="id">-->
+<!--        <th mat-header-cell *matHeaderCellDef> ID </th>-->
+<!--        <td mat-cell *matCellDef="let resource"> {{resource.id}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="name">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--        <td mat-cell *matCellDef="let resource"> {{resource.name}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="type">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Type </th>-->
+<!--        <td mat-cell *matCellDef="let resource"> {{resource.type}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="quantity">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Quantity </th>-->
+<!--        <td mat-cell *matCellDef="let resource"> {{resource.quantity}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <ng-container matColumnDef="provider">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Provider </th>-->
+<!--        <td mat-cell *matCellDef="let resource"> {{resource.provider}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <tr mat-header-row *matHeaderRowDef="['id', 'name', 'type', 'quantity', 'provider']" style="font-weight: 600"></tr>-->
+<!--      <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'type', 'quantity', 'provider'];"></tr>-->
+<!--    </table>-->
+<!--  </div>-->
 
 <!--  &lt;!&ndash; Task Form &ndash;&gt;-->
-<!--  <div *ngIf="isEditing || !selectedTask">-->
+<!--&lt;!&ndash;  <div *ngIf="isEditing || !selectedTask" class="task-form">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2>{{ isEditing ? 'Edit Task' : 'Add Task' }}</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <form (ngSubmit)="onSubmit()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-form-field appearance="outline">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-label>Description</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input matInput [(ngModel)]="formTask.description" name="description" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <mat-form-field appearance="outline">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-label>Start Date</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input matInput type="date" [(ngModel)]="formTask.startDate" name="startDate">&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <mat-form-field appearance="outline">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-label>End Date</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input matInput type="date" [(ngModel)]="formTask.endDate" name="endDate">&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <mat-form-field appearance="outline">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-label>Status</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input matInput [(ngModel)]="formTask.status" name="status">&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <mat-form-field appearance="outline">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-label>Project Id</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input matInput type="number" [(ngModel)]="formTask.projectId" name="projectId">&ndash;&gt;-->
+<!--&lt;!&ndash;      </mat-form-field>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div style="display: flex; justify-content: center;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button style="width: 200px;" mat-raised-button color="primary" type="submit">&ndash;&gt;-->
+<!--&lt;!&ndash;          {{ isEditing ? 'Update Task' : 'Add Task' }}&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--  <div *ngIf="isEditing || !selectedTask" class="task-form">-->
 <!--    <h2>{{ isEditing ? 'Edit Task' : 'Add Task' }}</h2>-->
-<!--    <form (ngSubmit)="onSubmit()">-->
-<!--      <div>-->
-<!--        <label>Description:</label>-->
-<!--        <input [(ngModel)]="formTask.description" name="description" required>-->
+<!--    <form (ngSubmit)="onSubmit()" #taskForm="ngForm">-->
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>Description</mat-label>-->
+<!--        <input matInput [(ngModel)]="formTask.description" name="description" required #description="ngModel">-->
+<!--        <mat-error *ngIf="description.invalid && description.touched">Description is required.</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>Start Date</mat-label>-->
+<!--        <input matInput type="date" [(ngModel)]="formTask.startDate" name="startDate" #startDate="ngModel">-->
+<!--        <mat-error *ngIf="startDate.invalid && startDate.touched">Please enter a valid start date.</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>End Date</mat-label>-->
+<!--        <input matInput type="date" [(ngModel)]="formTask.endDate" name="endDate" #endDate="ngModel">-->
+<!--        <mat-error *ngIf="endDate.invalid && endDate.touched">Please enter a valid end date.</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>Status</mat-label>-->
+<!--        <input matInput [(ngModel)]="formTask.status" name="status" #status="ngModel">-->
+<!--        <mat-error *ngIf="status.invalid && status.touched">Status is required.</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>Project Id</mat-label>-->
+<!--        <input matInput type="number" [(ngModel)]="formTask.projectId" name="projectId" #projectId="ngModel">-->
+<!--        <mat-error *ngIf="projectId.invalid && projectId.touched">Project Id is required and must be a number.</mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      <div style="display: flex; justify-content: center;">-->
+<!--        <button style="width: 200px;" mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">-->
+<!--          {{ isEditing ? 'Update Task' : 'Add Task' }}-->
+<!--        </button>-->
 <!--      </div>-->
-<!--      <div>-->
-<!--        <label>Start Date:</label>-->
-<!--        <input type="date" [(ngModel)]="formTask.startDate" name="startDate">-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <label>End Date:</label>-->
-<!--        <input type="date" [(ngModel)]="formTask.endDate" name="endDate">-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <label>Status:</label>-->
-<!--        <input type="text" [(ngModel)]="formTask.status" name="status">-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <label>Project Id:</label>-->
-<!--        <input type="number" [(ngModel)]="formTask.projectId" name="projectId">-->
-<!--      </div>-->
-<!--      <button type="submit">{{ isEditing ? 'Update Task' : 'Add Task' }}</button>-->
 <!--    </form>-->
 <!--  </div>-->
+
 <!--</div>-->
 <div class="task-list-container">
 
   <div class="header">
     <h2>Task Management</h2>
-<!--    <button mat-raised-button color="primary" (click)="onAddTask()">Add Task</button>-->
+    <!--    <button mat-raised-button color="primary" (click)="onAddTask()">Add Task</button>-->
   </div>
 
   <div class="table-container">
@@ -190,98 +307,3 @@
     </form>
   </div>
 </div>
-
-
-<!--<div class="task-list-container">-->
-<!--  <div class="header">-->
-<!--    <h2 style="color: #4051B5">Task Management</h2>-->
-<!--    &lt;!&ndash;    <button mat-raised-button color="primary" (click)="onAddTask()">Add Task</button>&ndash;&gt;-->
-<!--  </div>-->
-
-<!--  <div class="table-container">-->
-<!--    <table mat-table [dataSource]="tasks" class="mat-elevation-z8 responsive-table">-->
-<!--      <ng-container matColumnDef="id">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Id </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.id }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="description">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Description </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.description }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="startDate">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Start Date </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.startDate | date:'mediumDate' }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="endDate">-->
-<!--        <th mat-header-cell *matHeaderCellDef> End Date </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.endDate | date:'mediumDate' }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="status">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Status </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.status }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="projectId">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Project Id </th>-->
-<!--        <td mat-cell *matCellDef="let task"> {{ task.projectId }} </td>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container matColumnDef="actions">-->
-<!--        <th mat-header-cell *matHeaderCellDef> Actions </th>-->
-<!--        <td mat-cell *matCellDef="let task">-->
-<!--          <button mat-icon-button (click)="onEdit(task)" matTooltip="Edit">-->
-<!--            <mat-icon>edit</mat-icon>-->
-<!--          </button>-->
-<!--          <button mat-icon-button (click)="onDelete(task)" matTooltip="Delete">-->
-<!--            <mat-icon>delete</mat-icon>-->
-<!--          </button>-->
-<!--        </td>-->
-<!--      </ng-container>-->
-
-<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--    </table>-->
-<!--  </div>-->
-
-<!--  <mat-paginator [length]="tasks.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>-->
-
-<!--  <div *ngIf="isEditing || !selectedTask" class="task-form">-->
-<!--    <h2 style="color: #4051B5 ;">{{ isEditing ? 'Edit Task' : 'Add Task' }}</h2>-->
-<!--    <form (ngSubmit)="onSubmit()">-->
-<!--      <mat-form-field appearance="outline">-->
-<!--        <mat-label>Description</mat-label>-->
-<!--        <input matInput [(ngModel)]="formTask.description" name="description" required>-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="outline">-->
-<!--        <mat-label>Start Date</mat-label>-->
-<!--        <input matInput type="date" [(ngModel)]="formTask.startDate" name="startDate">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="outline">-->
-<!--        <mat-label>End Date</mat-label>-->
-<!--        <input matInput type="date" [(ngModel)]="formTask.endDate" name="endDate">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="outline">-->
-<!--        <mat-label>Status</mat-label>-->
-<!--        <input matInput [(ngModel)]="formTask.status" name="status">-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field appearance="outline">-->
-<!--        <mat-label>Project Id</mat-label>-->
-<!--        <input matInput type="number" [(ngModel)]="formTask.projectId" name="projectId">-->
-<!--      </mat-form-field>-->
-<!--      <div style="display: flex ; justify-content: center">-->
-<!--      <button style="width: 200px" mat-raised-button color="primary" type="submit">{{ isEditing ? 'Update Task' : 'Add Task' }}</button>-->
-<!--      </div>-->
-<!--      <td mat-cell *matCellDef="let task">-->
-<!--        <button mat-button (click)="viewResources(task.id)">View Resources</button>-->
-<!--      </td>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--</div>-->

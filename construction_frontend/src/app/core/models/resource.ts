@@ -9,8 +9,9 @@ export interface Resource {
   type? : ResourceType ;
   provider ? : string
   // task : Task[];
-
+  task?: Task[];
   taskId ? : number;
+
 
 
 

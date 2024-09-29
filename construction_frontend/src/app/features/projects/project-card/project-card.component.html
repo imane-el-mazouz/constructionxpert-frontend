@@ -1,46 +1,108 @@
+
+
+<!--<mat-card class="project-card" [@cardAnimation]>-->
+<!--  <form [formGroup]="projectForm" (ngSubmit)="onEdit()">-->
+<!--    <mat-card-header>-->
+<!--      <mat-card-title>-->
+<!--        <input matInput formControlName="name" placeholder="Project Name"/>-->
+<!--        <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">-->
+<!--          <mat-error *ngIf="name?.errors?.required">Project name is required.</mat-error>-->
+<!--          <mat-error *ngIf="name?.errors?.minlength">Project name must be at least 3 characters long.</mat-error>-->
+<!--        </mat-error>-->
+<!--      </mat-card-title>-->
+<!--      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Project options">-->
+<!--        <mat-icon>more_vert</mat-icon>-->
+<!--      </button>-->
+<!--    </mat-card-header>-->
+<!--    <mat-card-content>-->
+<!--      <mat-form-field>-->
+<!--        <mat-label>Description</mat-label>-->
+<!--        <textarea matInput formControlName="description"></textarea>-->
+<!--      </mat-form-field>-->
+
+<!--      <div class="project-details">-->
+<!--        <div class="detail-item">-->
+<!--          <mat-icon>event</mat-icon>-->
+<!--          <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"/>-->
+<!--          <mat-datepicker #startDatePicker></mat-datepicker>-->
+<!--        </div>-->
+<!--        <div class="detail-item">-->
+<!--          <mat-icon>event_available</mat-icon>-->
+<!--          <input matInput [matDatepicker]="endDatePicker" formControlName="endDate"/>-->
+<!--          <mat-datepicker #endDatePicker></mat-datepicker>-->
+<!--        </div>-->
+<!--        <div class="detail-item">-->
+<!--          <mat-icon>attach_money</mat-icon>-->
+<!--          <input matInput formControlName="budget" type="number"/>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </mat-card-content>-->
+<!--    <mat-card-actions>-->
+<!--      <button mat-stroked-button class="view-tasks-btn" type="button">-->
+<!--        <mat-icon>visibility</mat-icon>-->
+<!--        VIEW TASKS-->
+<!--      </button>-->
+<!--      <button mat-stroked-button class="edit-btn" type="submit">-->
+<!--        <mat-icon>edit</mat-icon>-->
+<!--        EDIT-->
+<!--      </button>-->
+<!--    </mat-card-actions>-->
+<!--  </form>-->
+<!--</mat-card>-->
+
+<!--<mat-menu #menu="matMenu">-->
+<!--  <button mat-menu-item (click)="onEdit()">-->
+<!--    <mat-icon>edit</mat-icon>-->
+<!--    <span>Edit</span>-->
+<!--  </button>-->
+<!--  <button mat-menu-item (click)="onDelete()">-->
+<!--    <mat-icon>delete</mat-icon>-->
+<!--    <span>Delete</span>-->
+<!--  </button>-->
+<!--</mat-menu>-->
 <mat-card class="project-card" [@cardAnimation]>
-    <mat-card-header>
-      <mat-card-title>{{ project.name }}</mat-card-title>
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Project options">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </mat-card-header>
-    <mat-card-content>
-      <p class="project-description">{{ project.description }}</p>
-      <div class="project-details">
-        <div class="detail-item">
-          <mat-icon>event</mat-icon>
-          <span>Start: {{ project.startDate | date:'MMM d, yyyy' }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>event_available</mat-icon>
-          <span>End: {{ project.endDate | date:'MMM d, yyyy' }}</span>
-        </div>
-        <div class="detail-item">
-          <mat-icon>attach_money</mat-icon>
-          <span>Budget: {{ project.budget | currency }}</span>
-        </div>
+  <mat-card-header>
+    <mat-card-title>{{ project.name }}</mat-card-title>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Project options">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="project-description">{{ project.description }}</p>
+    <div class="project-details">
+      <div class="detail-item">
+        <mat-icon>event</mat-icon>
+        <span>Start: {{ project.startDate | date:'MMM d, yyyy' }}</span>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-stroked-button class="view-tasks-btn">
-        <mat-icon>visibility</mat-icon>
-        VIEW TASKS
-      </button>
-      <button mat-stroked-button class="edit-btn" (click)="onEdit()">
-        <mat-icon>edit</mat-icon>
-        EDIT
-      </button>
-    </mat-card-actions>
-  </mat-card>
-  
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onEdit()">
+      <div class="detail-item">
+        <mat-icon>event_available</mat-icon>
+        <span>End: {{ project.endDate | date:'MMM d, yyyy' }}</span>
+      </div>
+      <div class="detail-item">
+        <mat-icon>attach_money</mat-icon>
+        <span>Budget: {{ project.budget | currency }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-stroked-button class="view-tasks-btn">
+      <mat-icon>visibility</mat-icon>
+      VIEW TASKS
+    </button>
+    <button mat-stroked-button class="edit-btn" (click)="onEdit()">
       <mat-icon>edit</mat-icon>
-      <span>Edit</span>
+      EDIT
     </button>
-    <button mat-menu-item (click)="onDelete()">
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-  </mat-menu>
+  </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="onEdit()">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
+  </button>
+  <button mat-menu-item (click)="onDelete()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>
