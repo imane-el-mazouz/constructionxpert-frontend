@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {NavBarComponent} from "./shared/nav-bar/nav-bar.component";
 import { DashUserComponent } from "./features/dash-user/dash-user.component";
 import {FormsModule} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
@@ -21,6 +20,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {NavBarComponent} from "./shared/components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-root',
