@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ResourceService {
-  private apiUrl = `${environment.apiUrl}/resources`;
+  private apiUrl = `${environment.resourcesUrl}`;
   private http = inject(HttpClient);
 
   getResources(): Observable<Resource[]> {

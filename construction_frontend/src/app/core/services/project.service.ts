@@ -10,8 +10,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = `${environment.apiUrl}/projects`;
-  private taskUrl = `${environment.apiUrl}/tasks`;
+  private apiUrl = `${environment.projectsUrl}`;
+  private taskUrl = `${environment.tasksUrl}`;
   private http = inject(HttpClient);
 
   getAllProjects(): Observable<Project[]> {

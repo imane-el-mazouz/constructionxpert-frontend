@@ -10,8 +10,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = `${environment.apiUrl}/tasks`;
-  private resourceUrl = `${environment.apiUrl}/resources`;
+  private apiUrl = `${environment.tasksUrl}`;
+  private resourceUrl = `${environment.resourcesUrl}`;
   private http = inject(HttpClient);
 
   createTask(task: Task): Observable<Task> {
@@ -58,6 +58,7 @@ export class TaskService {
   }
 }
 
+///////////
 
 
 

@@ -130,7 +130,7 @@ export class ResourceManagementComponent implements OnInit {
 
   onDeleteResource(id: number | undefined): void {
     if (confirm('Are you sure you want to delete this resource?')) {
-      this.resourceService.deleteResource(id).subscribe(
+      this.resourceService.deleteResource(id!).subscribe(
         () => this.loadResources(),
         (error) => console.error(`Error deleting resource: ${error}`)
       );
