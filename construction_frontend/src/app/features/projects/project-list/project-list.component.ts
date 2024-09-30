@@ -15,6 +15,7 @@ import { ProjectFormComponent } from '../project-form/project-form.component';
 import { CommonModule } from '@angular/common';  // CommonModule to use built-in pipes
 import { FormsModule } from '@angular/forms';
 import {Task} from "../../../core/models/task";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-project-list',
@@ -33,14 +34,32 @@ import {Task} from "../../../core/models/task";
     MatSnackBarModule,
     MatTooltipModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput
   ]
 })
 export class ProjectListComponent implements OnInit {
   projects = new MatTableDataSource<Project>([]);
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'budget', 'actions'];
+
   selectedProjectTasks: Task[] = [];
   selectedProjectId: number | null = null;
+
+
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  totalProjects: number = 0;
+  pageSize: number = 5;
+  currentPage: number = 0;
+  sortField: string = 'id';
+  sortDirection: string = 'asc';
+
+  minBudget?: number;
+  maxBudget?: number;
+  startDate?: string;
+  endDate?: string;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -66,11 +85,26 @@ export class ProjectListComponent implements OnInit {
         this.snackBar.open('Error loading projects', 'Close', { duration: 3000 });
       }
     });
+    this.projectService.getFilteredProjects(this.minBudget, this.maxBudget, this.startDate, this.endDate)
+      .subscribe({
+        next: (response) => {
+          this.projects.data = response.content;
+          this.projects.paginator = this.paginator;
+          this.projects.sort = this.sort;
+        },
+        error: () => {
+          this.snackBar.open('Error loading projects', 'Close', { duration: 3000 });
+        }
+      });
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.projects.filter = filterValue.trim().toLowerCase();
+  // applyFilter(event: Event): void {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.projects.filter = filterValue.trim().toLowerCase();
+  // }
+
+  applyFilter(): void {
+    this.loadProjects();
   }
 
 

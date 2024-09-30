@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Project } from '../models/project.model';
 import { Task } from '../models/task';
 import { environment } from '../../../environments/environment';
+import {Page} from "../models/page";
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,41 @@ export class ProjectService {
     console.error('An error occurred', error);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+
+  getFilteredProjects(
+    minBudget?: number,
+    maxBudget?: number,
+    startDate?: string,
+    endDate?: string,
+    page: number = 0,
+    size: number = 10,
+    sortBy: string = 'budget',
+    direction: string = 'asc'
+  ): Observable<Page<Project>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy)
+      .set('direction', direction);
+
+    if (minBudget !== undefined) {
+      params = params.set('minBudget', minBudget.toString());
+    }
+    if (maxBudget !== undefined) {
+      params = params.set('maxBudget', maxBudget.toString());
+    }
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+
+    return this.http.get<Page<Project>>(this.apiUrl, {params} )
+      .pipe(catchError(this.handleError));
+  }
+
 }
 /*
 
